@@ -1,10 +1,6 @@
-@file:Suppress("UnstableApiUsage")
-
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
     kotlin("kapt")
 }
 
@@ -70,7 +66,7 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.14.2")
-    ksp("com.github.bumptech.glide:compiler:4.14.2")
+    kapt("com.github.bumptech.glide:compiler:4.14.2")
 
     // LiveData
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
