@@ -1,4 +1,4 @@
-package com.congressdatacontest.congressdatacontest_android
+package com.congressdatacontest.congressdatacontest_android.common
 
 import android.app.Application
 
