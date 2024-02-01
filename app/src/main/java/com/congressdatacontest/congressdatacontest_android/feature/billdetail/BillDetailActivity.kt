@@ -1,4 +1,4 @@
-package com.congressdatacontest.congressdatacontest_android
+package com.congressdatacontest.congressdatacontest_android.feature.billdetail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
