@@ -1,10 +1,12 @@
 package com.congressdatacontest.congressdatacontest_android.feature.category
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.congressdatacontest.congressdatacontest_android.databinding.ActivityMainBinding
+import com.congressdatacontest.congressdatacontest_android.feature.board.BoardActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,13 +32,16 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerViewCategories.adapter = categoryAdapter
 
         binding.buttonGoToInterests.setOnClickListener {
-            Log.d("ohhuiju", getSelectedSubcategories(categories).toString())
+            val intent = Intent(this, BoardActivity::class.java)
+            startActivity(intent)
         }
     }
 }
 
-fun getSelectedSubcategories(categories: List<Category>): List<String> {
+fun getSelectedSubcategories(categories: List<Category>): MutableList<Pair<String, String>> {
     return categories.flatMap { category ->
-        category.subcategories.filter { it.isSelected }.map { it.name }
-    }
+        category.subcategories.filter { it.isSelected }.map { subcategory ->
+            Pair(subcategory.name, subcategory.color)
+        }
+    }.toMutableList()
 }

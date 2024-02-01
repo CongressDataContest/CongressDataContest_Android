@@ -7,4 +7,8 @@
     <string name="bill_detail_content">제안 이유 및 주요 내용</string>
     <string name="bill_evaluation_process">심사진행단계</string>
     <string name="title_related_news">연관 뉴스</string>
+
+    <!-- board -->
+    <string name="board_page_title">의안 현황 목록</string>
+    <string name="board_explain">관심있는 의안을 찾아드려요!</string>
 </resources>

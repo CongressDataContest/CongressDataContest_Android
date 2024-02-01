@@ -16,12 +16,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CongressDataContest_Android"
-        tools:targetApi="31"
-        tools:ignore="LockedOrientationActivity">
+        tools:ignore="LockedOrientationActivity"
+        tools:targetApi="31">
+        <activity
+            android:name=".feature.board.BoardActivity"
+            android:exported="false" />
         <activity
             android:name=".feature.billdetail.BillDetailActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".feature.category.MainActivity"
             android:exported="true"
