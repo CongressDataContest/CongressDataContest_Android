@@ -50,5 +50,8 @@ class BoardActivity : AppCompatActivity() {
             binding.chipGroup.addView(chip)
         }
 
+        binding.ivBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 }
