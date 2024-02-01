@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature.billdetail.BillDetailActivity">
+    tools:context=".feature.board.BoardActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tool_bar"
@@ -127,6 +127,12 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="16dp">
             </com.google.android.material.chip.ChipGroup>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvBillList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_bill" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
