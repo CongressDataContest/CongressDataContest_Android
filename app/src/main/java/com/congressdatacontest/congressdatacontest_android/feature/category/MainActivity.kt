@@ -38,10 +38,19 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-fun getSelectedSubcategories(categories: List<Category>): MutableList<Pair<String, String>> {
+fun getSelectedSubcategories(categories: List<Category>): MutableList<Triple<Int, String, String>> {
     return categories.flatMap { category ->
         category.subcategories.filter { it.isSelected }.map { subcategory ->
-            Pair(subcategory.name, subcategory.color)
+            Triple(subcategory.id, subcategory.name, subcategory.color)
         }
     }.toMutableList()
 }
+
+fun getSelectedSubcategoryIds(categories: List<Category>): List<Int> {
+    return categories.flatMap { category ->
+        category.subcategories.filter { it.isSelected }.map { subcategory ->
+            subcategory.id
+        }
+    }
+}
+
