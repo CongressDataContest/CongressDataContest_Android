@@ -7,8 +7,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Bill(
-    val billInfo: BillInfo,
-    val newsResponseList: List<NewsResponse>,
+    @SerializedName("bill") val billInfo: BillInfo,
+    @SerializedName("newsList") val newsResponseList: List<NewsResponse>,
 ) : Parcelable
 
 @Parcelize
