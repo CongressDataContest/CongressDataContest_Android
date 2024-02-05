@@ -225,7 +225,10 @@ class BillDetailActivity : AppCompatActivity() {
     }
 
     private fun onClickNewsItem(newsData: NewsData) {
-
+        val intent = Intent(this, NewsWebViewActivity::class.java)
+            .putExtra("link", newsData.link)
+        Log.i("onClickNewsItem", "link: ${newsData.link}")
+        startActivity(intent)
     }
 
     private fun initListeners() {
