@@ -138,7 +138,8 @@ class BoardActivity : AppCompatActivity() {
         call.enqueue(object : retrofit2.Callback<List<BillResponseItem>> {
             override fun onResponse(call: Call<List<BillResponseItem>>, response: Response<List<BillResponseItem>>) {
                 Log.d("board", "onResponse: ${response.body()}")
-                billAdapter.submitList(response.body())
+                val list = response.body()?.subList(0, 10)
+                billAdapter.submitList(list)
             }
 
             override fun onFailure(call: Call<List<BillResponseItem>>, t: Throwable) {

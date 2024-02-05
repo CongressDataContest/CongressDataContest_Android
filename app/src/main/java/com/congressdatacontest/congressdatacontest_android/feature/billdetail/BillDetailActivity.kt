@@ -213,7 +213,7 @@ class BillDetailActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<Bill>, t: Throwable) {
-                Log.e("onFailure", "error: ${t.message}")
+                Log.e("onFailure1", "error: ${t.message}")
                 t.stackTrace
             }
         })
@@ -280,7 +280,7 @@ class BillDetailActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<VoteResponse>, t: Throwable) {
-                    Log.e("onFailure", "error: ${t.message}")
+                    Log.e("onFailure3", "error: ${t.message}")
                     t.stackTrace
                     upClicked = false
                 }
@@ -324,7 +324,7 @@ class BillDetailActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<VoteResponse>, t: Throwable) {
-                    Log.e("onFailure", "error: ${t.message}")
+                    Log.e("onFailure2", "error: ${t.message}")
                     t.stackTrace
                     middleClicked = false
                 }
