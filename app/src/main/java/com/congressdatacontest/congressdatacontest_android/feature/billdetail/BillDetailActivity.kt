@@ -23,6 +23,9 @@ import retrofit2.Response
 class BillDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBillDetailBinding
     private lateinit var newsAdapter: NewsAdapter
+    private var upClicked: Boolean = false
+    private var middleClicked: Boolean = false
+    private var downClicked: Boolean = false
 
     private var getBillDetailService: GetBillDetailService = RetrofitClient.provideRetrofit().create(GetBillDetailService::class.java)
     private var voteBillService: VoteBillService = RetrofitClient.provideRetrofit().create(VoteBillService::class.java)
@@ -234,6 +237,139 @@ class BillDetailActivity : AppCompatActivity() {
     private fun initListeners() {
         binding.ivBack.setOnClickListener {
             finish()
+        }
+
+        binding.layoutLike.setOnClickListener {
+            // 이미 up을 클릭했으면 -> -1
+            // up을 클린한 적이 없으면 -> 1
+            // middle 또는 down을 클릭한 상태이면 -> 1
+
+            val myCount: Int = if (upClicked) {
+                -1
+            } else if (middleClicked && downClicked) {
+                1
+            } else {
+                1
+            }
+
+            Log.i("layoutLike", "upClicked: $upClicked, " +
+                    "middleClicked: $middleClicked, " +
+                    "downClicked: $downClicked, " +
+                    "myCount: $myCount")
+
+            val call = voteBillService.voteBill(
+                VoteRequest(
+                    getBillData()?.billInfo?.id!!,
+                    Vote.UP.vote,
+                    myCount
+                )
+            )
+
+            call.enqueue(object : Callback<VoteResponse> {
+                override fun onResponse(
+                    call: Call<VoteResponse>,
+                    response: Response<VoteResponse>,
+                ) {
+                    if (response.code() == 200) {
+                        binding.tvLikes.text = response.body()?.value.toString()
+                        upClicked = true
+                    }
+                }
+
+                override fun onFailure(call: Call<VoteResponse>, t: Throwable) {
+                    Log.e("onFailure", "error: ${t.message}")
+                    t.stackTrace
+                    upClicked = false
+                }
+            })
+        }
+
+        binding.layoutNoResponse.setOnClickListener {
+            // 이미 middle을 클릭했으면 -> -1
+            // middle을 클린한 적이 없으면 -> 1
+            // up 또는 down을 클릭한 상태이면 -> 1
+            val myCount: Int = if (middleClicked) {
+                -1
+            } else if (upClicked && downClicked) {
+                1
+            } else {
+                1
+            }
+
+            Log.i("layoutNoResponse", "middleClicked: $middleClicked, " +
+                    "upClicked: $upClicked, " +
+                    "downClicked: $downClicked, " +
+                    "myCount: $myCount")
+
+            val call = voteBillService.voteBill(
+                VoteRequest(
+                    getBillData()?.billInfo?.id!!,
+                    Vote.MIDDLE.vote,
+                    myCount
+                )
+            )
+
+            call.enqueue(object : Callback<VoteResponse> {
+                override fun onResponse(
+                    call: Call<VoteResponse>,
+                    response: Response<VoteResponse>,
+                ) {
+                    if (response.code() == 200) {
+                        binding.tvNotKnow.text = response.body()?.value.toString()
+                        middleClicked = true
+                    }
+                }
+
+                override fun onFailure(call: Call<VoteResponse>, t: Throwable) {
+                    Log.e("onFailure", "error: ${t.message}")
+                    t.stackTrace
+                    middleClicked = false
+                }
+            })
+        }
+
+        binding.layoutDislike.setOnClickListener {
+            // 이미 down을 클릭했으면 -> -1
+            // down을 클린한 적이 없으면 -> 1
+            // up 또는 middle을 클릭한 상태이면 -> 1
+            val myCount: Int = if (downClicked) {
+                -1
+            } else if (upClicked && middleClicked) {
+                1
+            } else {
+                1
+            }
+
+            Log.i("layoutDislike", "downClicked: $downClicked, " +
+                    "upClicked: $upClicked, " +
+                    "middleClicked: $middleClicked, " +
+                    "myCount: $myCount")
+
+            val call = voteBillService.voteBill(
+                VoteRequest(
+                    getBillData()?.billInfo?.id!!,
+                    Vote.DOWN.vote,
+                    myCount
+                )
+            )
+
+            call.enqueue(object : Callback<VoteResponse> {
+                override fun onResponse(
+                    call: Call<VoteResponse>,
+                    response: Response<VoteResponse>,
+                ) {
+                    if (response.code() == 200) {
+                        binding.tvDislikes.text = response.body()?.value.toString()
+                        downClicked = true
+                    }
+                }
+
+                override fun onFailure(call: Call<VoteResponse>, t: Throwable) {
+                    downClicked = false
+                    t.stackTrace
+                    Log.e("onFailure", "error: ${t.message}")
+                }
+            })
         }
     }
 }
