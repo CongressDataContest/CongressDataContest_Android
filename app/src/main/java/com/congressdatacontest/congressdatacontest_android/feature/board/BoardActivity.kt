@@ -118,7 +118,7 @@ class BoardActivity : AppCompatActivity() {
     }
 
     private fun initProgressType() {
-        val itemProgress = listOf("전체", "소관위", "대안반영폐기", "철회", "원안가결", "법사위", "수정가결", "폐기", "등록")
+        val itemProgress = listOf("전체", "접수", "위원회심사", "체계자구심사", "본회의심의", "정부이송", "공포 ")
         val progressAdapter = ArrayAdapter(this, R.layout.item_dropdown_menu_popup, itemProgress)
 
         binding.progressType.setAdapter(progressAdapter)
