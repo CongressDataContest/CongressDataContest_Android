@@ -16,6 +16,7 @@ import com.congressdatacontest.congressdatacontest_android.common.RetrofitClient
 import com.congressdatacontest.congressdatacontest_android.common.VoteBillService
 import com.congressdatacontest.congressdatacontest_android.databinding.ActivityBillDetailBinding
 import com.congressdatacontest.congressdatacontest_android.feature.board.Bill
+import com.congressdatacontest.congressdatacontest_android.feature.board.BillResponseItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,9 +41,9 @@ class BillDetailActivity : AppCompatActivity() {
         initListeners()
     }
 
-    private fun getBillData(): Bill? {
+    private fun getBillData(): BillResponseItem? {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra("bill", Bill::class.java)
+            intent.getParcelableExtra("bill", BillResponseItem::class.java)
         } else {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra("bill")
@@ -66,25 +67,24 @@ class BillDetailActivity : AppCompatActivity() {
                 "isVisible = ${binding.rvNewsList.isVisible}")
 
         Log.i("initView", "BillData: ${getBillData()}, " +
-                "billInfo: ${getBillData()?.billInfo}, " +
-                "billId: ${getBillData()?.billInfo?.id}")
+                "billId: ${getBillData()?.id}")
 
-        val call = getBillDetailService.getBillDetail(getBillData()?.billInfo?.id!!)
+        val call = getBillDetailService.getBillDetail(getBillData()?.id!!)
 
         call.enqueue(object : Callback<Bill> {
             override fun onResponse(call: Call<Bill>, response: Response<Bill>) {
                 if (response.code() == 200) {
-                    binding.tvBillSuggesterValue.text = getBillData()?.billInfo?.proposer
-                    binding.tvBillSuggesterDateValue.text = getBillData()?.billInfo?.registerDate
-                    binding.tvBillStatusValue.text = getBillData()?.billInfo?.status
-                    binding.tvBillDetailContentValue.text = getBillData()?.billInfo?.pageContent
-                    binding.tvBillParentCategory.text = getBillData()?.billInfo?.majorTagName
-                    binding.tvBillSubCategory.text = getBillData()?.billInfo?.minorTagName
-                    binding.tvLikes.text = getBillData()?.billInfo?.upVoteCount.toString()
-                    binding.tvNotKnow.text = getBillData()?.billInfo?.middleVoteCount.toString()
-                    binding.tvDislikes.text = getBillData()?.billInfo?.downVoteCount.toString()
+                    binding.tvBillSuggesterValue.text = response.body()?.billInfo?.proposer
+                    binding.tvBillSuggesterDateValue.text = response.body()?.billInfo?.registerDate
+                    binding.tvBillStatusValue.text = response.body()?.billInfo?.status
+                    binding.tvBillDetailContentValue.text = response.body()?.billInfo?.pageContent
+                    binding.tvBillParentCategory.text = response.body()?.billInfo?.majorTagName
+                    binding.tvBillSubCategory.text = response.body()?.billInfo?.minorTagName
+                    binding.tvLikes.text = response.body()?.billInfo?.upVoteCount.toString()
+                    binding.tvNotKnow.text = response.body()?.billInfo?.middleVoteCount.toString()
+                    binding.tvDislikes.text = response.body()?.billInfo?.downVoteCount.toString()
 
-                    when (getBillData()?.billInfo?.status) {
+                    when (response.body()?.billInfo?.status) {
                         Status.ONE.status -> {
                             binding.billEvaluationProcess01.cvProcess.setBackgroundColor(
                                 ContextCompat.getColor(this@BillDetailActivity, R.color.billProcessed))
@@ -259,7 +259,7 @@ class BillDetailActivity : AppCompatActivity() {
 
             val call = voteBillService.voteBill(
                 VoteRequest(
-                    getBillData()?.billInfo?.id!!,
+                    getBillData()?.id!!,
                     Vote.UP.vote,
                     myCount
                 )
@@ -303,7 +303,7 @@ class BillDetailActivity : AppCompatActivity() {
 
             val call = voteBillService.voteBill(
                 VoteRequest(
-                    getBillData()?.billInfo?.id!!,
+                    getBillData()?.id!!,
                     Vote.MIDDLE.vote,
                     myCount
                 )
@@ -347,7 +347,7 @@ class BillDetailActivity : AppCompatActivity() {
 
             val call = voteBillService.voteBill(
                 VoteRequest(
-                    getBillData()?.billInfo?.id!!,
+                    getBillData()?.id!!,
                     Vote.DOWN.vote,
                     myCount
                 )

@@ -138,6 +138,7 @@ class BoardActivity : AppCompatActivity() {
         call.enqueue(object : retrofit2.Callback<List<BillResponseItem>> {
             override fun onResponse(call: Call<List<BillResponseItem>>, response: Response<List<BillResponseItem>>) {
                 Log.d("board", "onResponse: ${response.body()}")
+                billAdapter.submitList(response.body())
             }
 
             override fun onFailure(call: Call<List<BillResponseItem>>, t: Throwable) {
@@ -153,6 +154,7 @@ class BoardActivity : AppCompatActivity() {
         call.enqueue(object : retrofit2.Callback<List<BillResponseItem>> {
             override fun onResponse(call: Call<List<BillResponseItem>>, response: Response<List<BillResponseItem>>) {
                 Log.d("search", "onResponse: ${response.body()}")
+                billAdapter.submitList(response.body())
             }
 
             override fun onFailure(call: Call<List<BillResponseItem>>, t: Throwable) {
@@ -173,7 +175,7 @@ class BoardActivity : AppCompatActivity() {
         }
     }
 
-    private fun onClickBill(bill: Bill) {
+    private fun onClickBill(bill: BillResponseItem) {
         val intent = Intent(this, BillDetailActivity::class.java)
         intent.putExtra("bill", bill)
         startActivity(intent)
