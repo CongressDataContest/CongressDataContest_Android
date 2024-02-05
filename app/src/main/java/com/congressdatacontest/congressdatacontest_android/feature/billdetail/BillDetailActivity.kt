@@ -21,14 +21,14 @@ class BillDetailActivity : AppCompatActivity() {
         initListeners()
     }
 
-//    private fun getBillData(): Bill? {
-//        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            intent.getParcelableExtra("bill", Bill::class.java)
-//        } else {
-//            @Suppress("DEPRECATION")
-//            intent.getParcelableExtra("bill")
-//        }
-//    }
+    private fun getBillData(): Bill? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("bill", Bill::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableExtra("bill")
+        }
+    }
 
     private fun initView() {
 //        binding.tvBillSuggesterValue.text = getBillData()?.suggester
