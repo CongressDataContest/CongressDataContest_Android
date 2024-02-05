@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="main">#055BA6</color>
+
+    <color name="billProcessed">#03588C</color>
 </resources>
