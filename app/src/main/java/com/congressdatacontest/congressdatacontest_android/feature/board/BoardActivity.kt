@@ -1,13 +1,16 @@
 package com.congressdatacontest.congressdatacontest_android.feature.board
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.marginTop
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.congressdatacontest.congressdatacontest_android.R
 import com.congressdatacontest.congressdatacontest_android.databinding.ActivityBoardBinding
+import com.congressdatacontest.congressdatacontest_android.feature.billdetail.BillDetailActivity
 import com.congressdatacontest.congressdatacontest_android.feature.category.categories
 import com.congressdatacontest.congressdatacontest_android.feature.category.getSelectedSubcategories
 import com.congressdatacontest.congressdatacontest_android.feature.category.getSubcategoryUnClickColor
@@ -16,6 +19,7 @@ import com.google.android.material.chip.Chip
 class BoardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBoardBinding
+    private lateinit var billAdapter: BillAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,11 +45,13 @@ class BoardActivity : AppCompatActivity() {
             val chip = Chip(this).apply {
                 text = name
                 isCloseIconVisible = true
-                chipBackgroundColor = ColorStateList.valueOf(Color.parseColor(getSubcategoryUnClickColor(color)))
+                chipBackgroundColor =
+                    ColorStateList.valueOf(Color.parseColor(getSubcategoryUnClickColor(color)))
                 setOnCloseIconClickListener {
                     binding.chipGroup.removeView(this)
                 }
-                chipStrokeColor = ColorStateList.valueOf(Color.parseColor(getSubcategoryUnClickColor(color)))
+                chipStrokeColor =
+                    ColorStateList.valueOf(Color.parseColor(getSubcategoryUnClickColor(color)))
             }
             binding.chipGroup.addView(chip)
         }
@@ -53,5 +59,24 @@ class BoardActivity : AppCompatActivity() {
         binding.ivBack.setOnClickListener {
             onBackPressed()
         }
+
+        initRecyclerView(binding.rvBillList)
+    }
+
+    private fun initRecyclerView(recyclerView: RecyclerView) {
+        billAdapter = BillAdapter(
+            onClick = ::onClickBill
+        )
+
+        recyclerView.run {
+            adapter = billAdapter
+            layoutManager = LinearLayoutManager(this@BoardActivity)
+        }
+    }
+
+    private fun onClickBill(bill: Bill) {
+        val intent = Intent(this, BillDetailActivity::class.java)
+        intent.putExtra("bill", bill)
+        startActivity(intent)
     }
 }
