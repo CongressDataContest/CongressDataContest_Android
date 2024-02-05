@@ -35,18 +35,18 @@ class BillAdapter(
                 onClick(bill)
             }
 
-//            binding.tvProcess.text = bill.status
-//            binding.tvTitleBill.text = bill.title
-//            binding.tvBillSuggester.text = bill.suggester
-//            binding.tvBillSuggestDate.text = bill.date
-//            binding.tvBillParentCategory.text = bill.majorTagName
-//            binding.tvBillSubCategory.text = bill.minorTagName
+            binding.tvProcess.text = bill.billInfo.status
+            binding.tvTitleBill.text = bill.billInfo.title
+            binding.tvBillSuggester.text = bill.billInfo.proposer
+            binding.tvBillSuggestDate.text = bill.billInfo.registerDate
+            binding.tvBillParentCategory.text = bill.billInfo.majorTagName
+            binding.tvBillSubCategory.text = bill.billInfo.minorTagName
         }
     }
 
     companion object BillEvaluationProcessDiffUtil : DiffUtil.ItemCallback<Bill>() {
         override fun areItemsTheSame(oldItem: Bill, newItem: Bill): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.billInfo.title == newItem.billInfo.title
         }
 
         override fun areContentsTheSame(oldItem: Bill, newItem: Bill): Boolean {
