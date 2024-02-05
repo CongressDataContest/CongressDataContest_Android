@@ -8,6 +8,6 @@ import retrofit2.http.Query
 interface GetBillDetailService {
     @GET("api/bill/detail")
     fun getBillDetail(
-        @Query("id") id: Int
+        @Query("id") id: Int,
     ): Call<Bill>
 }

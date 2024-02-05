@@ -71,9 +71,12 @@ class BillDetailActivity : AppCompatActivity() {
 
         val call = getBillDetailService.getBillDetail(getBillData()?.id!!)
 
+        Log.i("initView", "call: $call")
+
         call.enqueue(object : Callback<Bill> {
             override fun onResponse(call: Call<Bill>, response: Response<Bill>) {
                 if (response.code() == 200) {
+                    Log.i("onResponse", "response: ${response.body()}")
                     binding.tvBillSuggesterValue.text = response.body()?.billInfo?.proposer
                     binding.tvBillSuggesterDateValue.text = response.body()?.billInfo?.registerDate
                     binding.tvBillStatusValue.text = response.body()?.billInfo?.status

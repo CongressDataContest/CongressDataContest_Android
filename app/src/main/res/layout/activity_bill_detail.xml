@@ -319,26 +319,39 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_title_related_news"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="35dp"
-                android:text="@string/title_related_news"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_second_line_bill_evaluation_process" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_news_list"
+            <LinearLayout
+                android:id="@+id/layout_related_news"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_related_news" />
+                app:layout_constraintTop_toBottomOf="@id/layout_second_line_bill_evaluation_process"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_title_related_news"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="35dp"
+                    android:text="@string/title_related_news"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_second_line_bill_evaluation_process" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_news_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title_related_news" />
+
+            </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
@@ -348,7 +361,7 @@
                 app:layout_goneMarginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rv_news_list">
+                app:layout_constraintTop_toBottomOf="@id/layout_related_news">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_like"
