@@ -1,5 +1,6 @@
 package com.congressdatacontest.congressdatacontest_android.feature.billdetail
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.congressdatacontest.congressdatacontest_android.R
 import com.congressdatacontest.congressdatacontest_android.common.GetBillDetailService
 import com.congressdatacontest.congressdatacontest_android.common.RetrofitClient
+import com.congressdatacontest.congressdatacontest_android.common.VoteBillService
 import com.congressdatacontest.congressdatacontest_android.databinding.ActivityBillDetailBinding
 import com.congressdatacontest.congressdatacontest_android.feature.board.Bill
 import retrofit2.Call
@@ -20,8 +22,10 @@ import retrofit2.Response
 
 class BillDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBillDetailBinding
+    private lateinit var newsAdapter: NewsAdapter
 
     private var getBillDetailService: GetBillDetailService = RetrofitClient.provideRetrofit().create(GetBillDetailService::class.java)
+    private var voteBillService: VoteBillService = RetrofitClient.provideRetrofit().create(VoteBillService::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +47,21 @@ class BillDetailActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        initRecyclerView(binding.rvNewsList)
+
+        // 뉴스가 0개 일 때
+        if (newsAdapter.currentList.isEmpty()) {
+            binding.rvNewsList.isGone = true
+            binding.rvNewsList.isVisible = false
+        } else { // 뉴스가 1 ~ 3개일 때
+            binding.rvNewsList.isGone = false
+            binding.rvNewsList.isVisible = true
+        }
+
+        Log.i("initView", "NewsList: ${newsAdapter.currentList}," +
+                "isGone = ${binding.rvNewsList.isGone}, " +
+                "isVisible = ${binding.rvNewsList.isVisible}")
+
         Log.i("initView", "BillData: ${getBillData()}, " +
                 "billInfo: ${getBillData()?.billInfo}, " +
                 "billId: ${getBillData()?.billInfo?.id}")
@@ -192,6 +211,21 @@ class BillDetailActivity : AppCompatActivity() {
                 t.stackTrace
             }
         })
+    }
+
+    private fun initRecyclerView(recyclerView: RecyclerView) {
+        newsAdapter = NewsAdapter(
+            onClick = ::onClickNewsItem
+        )
+
+        recyclerView.run {
+            adapter = newsAdapter
+            layoutManager = LinearLayoutManager(this@BillDetailActivity)
+        }
+    }
+
+    private fun onClickNewsItem(newsData: NewsData) {
+
     }
 
     private fun initListeners() {
