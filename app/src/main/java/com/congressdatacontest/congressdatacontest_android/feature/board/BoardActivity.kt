@@ -135,12 +135,12 @@ class BoardActivity : AppCompatActivity() {
     private fun getBoard() {
         val call = getBoardService.getBoard(TagRequest(getSelectedSubcategoryIds(categories)))
 
-        call.enqueue(object : retrofit2.Callback<BillResponse> {
-            override fun onResponse(call: Call<BillResponse>, response: Response<BillResponse>) {
-                Log.d("board", "onResponse: ${response.body()?.bills}")
+        call.enqueue(object : retrofit2.Callback<List<BillResponseItem>> {
+            override fun onResponse(call: Call<List<BillResponseItem>>, response: Response<List<BillResponseItem>>) {
+                Log.d("board", "onResponse: ${response.body()}")
             }
 
-            override fun onFailure(call: Call<BillResponse>, t: Throwable) {
+            override fun onFailure(call: Call<List<BillResponseItem>>, t: Throwable) {
                 Log.e("onFailure", "error: ${t.message}")
                 t.stackTrace
             }
@@ -150,13 +150,13 @@ class BoardActivity : AppCompatActivity() {
     private fun getBoardFiltering() {
         val call = getBoardService.getBoardFiltering(searchRequest)
 
-        call.enqueue(object : retrofit2.Callback<BillResponse> {
-            override fun onResponse(call: Call<BillResponse>, response: Response<BillResponse>) {
-                Log.d("search", "onResponse: ${response.body()?.bills}")
+        call.enqueue(object : retrofit2.Callback<List<BillResponseItem>> {
+            override fun onResponse(call: Call<List<BillResponseItem>>, response: Response<List<BillResponseItem>>) {
+                Log.d("search", "onResponse: ${response.body()}")
             }
 
-            override fun onFailure(call: Call<BillResponse>, t: Throwable) {
-                Log.e("onFailure", "error: ${t.message}")
+            override fun onFailure(call: Call<List<BillResponseItem>>, t: Throwable) {
+                Log.e("onFailure2", "error: ${t.message}")
                 t.stackTrace
             }
         })

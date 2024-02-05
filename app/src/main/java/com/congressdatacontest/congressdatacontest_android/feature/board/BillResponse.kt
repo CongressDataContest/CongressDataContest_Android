@@ -14,8 +14,3 @@ data class BillResponseItem(
     val minorTagName: String,
     val status: String
 ): Parcelable
-
-@Parcelize
-data class BillResponse(
-    val bills: List<BillResponseItem>
-)  : Parcelable

@@ -1,15 +1,14 @@
 package com.congressdatacontest.congressdatacontest_android.feature.category
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.congressdatacontest.congressdatacontest_android.databinding.ActivityMainBinding
 import com.congressdatacontest.congressdatacontest_android.feature.board.BoardActivity
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var categoryAdapter: CategoryAdapter
 
@@ -32,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerViewCategories.adapter = categoryAdapter
 
         binding.buttonGoToInterests.setOnClickListener {
+            if (!isSelectedSubcategoryExists)
+                Toast.makeText(this, "카테고리를 선택해주세요.", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, BoardActivity::class.java)
             startActivity(intent)
         }
@@ -53,4 +54,11 @@ fun getSelectedSubcategoryIds(categories: List<Category>): List<Int> {
         }
     }
 }
+
+val isSelectedSubcategoryExists = categories.any { category ->
+    category.subcategories.any { subcategory ->
+        subcategory.isSelected
+    }
+}
+
 
