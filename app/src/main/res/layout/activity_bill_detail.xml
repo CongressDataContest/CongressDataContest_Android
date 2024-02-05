@@ -245,6 +245,7 @@
                     layout="@layout/item_bill_evaluation_process01" />
 
                 <ImageView
+                    android:id="@+id/iv_process01"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
@@ -256,6 +257,7 @@
                     layout="@layout/item_bill_evaluation_process02" />
 
                 <ImageView
+                    android:id="@+id/iv_process02"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
@@ -267,6 +269,7 @@
                     layout="@layout/item_bill_evaluation_process03" />
 
                 <ImageView
+                    android:id="@+id/iv_process03"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
@@ -291,6 +294,7 @@
                 app:layout_constraintTop_toBottomOf="@id/layout_first_line_bill_evaluation_process">
 
                 <ImageView
+                    android:id="@+id/iv_process04"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
@@ -302,6 +306,7 @@
                     layout="@layout/item_bill_evaluation_process05" />
 
                 <ImageView
+                    android:id="@+id/iv_process05"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
@@ -327,13 +332,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout_second_line_bill_evaluation_process" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_news_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_related_news" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                app:layout_goneMarginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_related_news">
+                app:layout_constraintTop_toBottomOf="@id/rv_news_list">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_like"
