@@ -37,6 +37,9 @@ class NewsAdapter(
             }
 
             binding.tvTitleNews.text = newsData.title
+            binding.tvPositiveCount.text = newsData.positive.toString()
+            binding.tvNeutralCount.text = newsData.neutral.toString()
+            binding.tvNegativeCount.text = newsData.negative.toString()
 
             Glide.with(itemView).load(newsData.image).into(binding.ivNews)
         }
