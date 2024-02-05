@@ -31,10 +31,18 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerViewCategories.adapter = categoryAdapter
 
         binding.buttonGoToInterests.setOnClickListener {
-            if (!isSelectedSubcategoryExists)
+            val isSelectedSubcategoryExists = categories.any { category ->
+                category.subcategories.any { subcategory ->
+                    subcategory.isSelected
+                }
+            }
+
+            if (isSelectedSubcategoryExists){
+                val intent = Intent(this, BoardActivity::class.java)
+                startActivity(intent)
+            } else {
                 Toast.makeText(this, "카테고리를 선택해주세요.", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, BoardActivity::class.java)
-            startActivity(intent)
+            }
         }
     }
 }
@@ -54,11 +62,4 @@ fun getSelectedSubcategoryIds(categories: List<Category>): List<Int> {
         }
     }
 }
-
-val isSelectedSubcategoryExists = categories.any { category ->
-    category.subcategories.any { subcategory ->
-        subcategory.isSelected
-    }
-}
-
 
