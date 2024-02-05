@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.congressdatacontest.congressdatacontest_android.databinding.ItemNewsBinding
-import com.congressdatacontest.congressdatacontest_android.feature.board.NewsData
 
 class NewsAdapter(
     private val onClick: (NewsData) -> Unit
