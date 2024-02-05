@@ -9,9 +9,9 @@ data class NewsResponse(
     @SerializedName("title") val title: String,
     @SerializedName("link") val link: String,
     @SerializedName("image") val image: String,
-    @SerializedName("positive") val positive: Int,
-    @SerializedName("neutral") val neutral: Int,
-    @SerializedName("negative") val negative: Int,
+    @SerializedName("positive") val positive: Double,
+    @SerializedName("neutral") val neutral: Double,
+    @SerializedName("negative") val negative: Double,
 ) : Parcelable
 
 @Parcelize
@@ -19,9 +19,9 @@ data class NewsData(
     val title: String,
     val link: String,
     val image: String,
-    val positive: Int,
-    val neutral: Int,
-    val negative: Int,
+    val positive: Double,
+    val neutral: Double,
+    val negative: Double,
 ) : Parcelable
 
 fun NewsResponse.toEntity(): NewsData {
