@@ -2,12 +2,9 @@ package com.congressdatacontest.congressdatacontest_android.common
 
 import com.congressdatacontest.congressdatacontest_android.feature.billdetail.VoteRequest
 import com.congressdatacontest.congressdatacontest_android.feature.billdetail.VoteResponse
-import com.congressdatacontest.congressdatacontest_android.feature.board.BillResponse
-import com.congressdatacontest.congressdatacontest_android.feature.board.TagRequest
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.PATCH
-import retrofit2.http.POST
 
 interface VoteBillService {
     @PATCH("api/bill/vote")
