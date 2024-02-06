@@ -9,6 +9,8 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.congressdatacontest.congressdatacontest_android.R
 import com.congressdatacontest.congressdatacontest_android.common.BoardService
@@ -138,6 +140,21 @@ class BoardActivity : AppCompatActivity() {
         call.enqueue(object : retrofit2.Callback<List<BillResponseItem>> {
             override fun onResponse(call: Call<List<BillResponseItem>>, response: Response<List<BillResponseItem>>) {
                 Log.d("board", "onResponse: ${response.body()}")
+                var list = response.body()
+                if (response.body()?.isEmpty() == true) {
+                    binding.tvNoBill.isVisible = true
+                    binding.rvBillList.isGone = true
+                    binding.rvBillList.isVisible = false
+                } else {
+                    binding.tvNoBill.isVisible = false
+                    binding.rvBillList.isGone = false
+                    binding.rvBillList.isVisible = true
+                }
+
+                if (response.body()?.size!! > 20) {
+                    list = response.body()?.subList(0, 20)
+                }
+                billAdapter.submitList(list)
             }
 
             override fun onFailure(call: Call<List<BillResponseItem>>, t: Throwable) {
@@ -153,6 +170,7 @@ class BoardActivity : AppCompatActivity() {
         call.enqueue(object : retrofit2.Callback<List<BillResponseItem>> {
             override fun onResponse(call: Call<List<BillResponseItem>>, response: Response<List<BillResponseItem>>) {
                 Log.d("search", "onResponse: ${response.body()}")
+                billAdapter.submitList(response.body())
             }
 
             override fun onFailure(call: Call<List<BillResponseItem>>, t: Throwable) {
@@ -169,11 +187,11 @@ class BoardActivity : AppCompatActivity() {
 
         binding.rvBillList.run {
             adapter = billAdapter
-            layoutManager = LinearLayoutManager(this@BoardActivity)
+            layoutManager = LinearLayoutManager(context)
         }
     }
 
-    private fun onClickBill(bill: Bill) {
+    private fun onClickBill(bill: BillResponseItem) {
         val intent = Intent(this, BillDetailActivity::class.java)
         intent.putExtra("bill", bill)
         startActivity(intent)

@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.congressdatacontest.congressdatacontest_android.databinding.ItemBillBinding
 
 class BillAdapter(
-    private val onClick: (Bill) -> Unit
-): ListAdapter<Bill, BillAdapter.BillViewHolder>(BillEvaluationProcessDiffUtil) {
+    private val onClick: (BillResponseItem) -> Unit
+): ListAdapter<BillResponseItem, BillAdapter.BillViewHolder>(BillEvaluationProcessDiffUtil) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,29 +27,34 @@ class BillAdapter(
 
     class BillViewHolder(
         private val binding: ItemBillBinding,
-        private val onClick: (Bill) -> Unit
+        private val onClick: (BillResponseItem) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(bill: Bill) {
+        fun bind(bill: BillResponseItem) {
             binding.root.setOnClickListener {
                 onClick(bill)
             }
 
-            binding.tvProcess.text = bill.billInfo.status
-            binding.tvTitleBill.text = bill.billInfo.title
-            binding.tvBillSuggester.text = bill.billInfo.proposer
-            binding.tvBillSuggestDate.text = bill.billInfo.registerDate
-            binding.tvBillParentCategory.text = bill.billInfo.majorTagName
-            binding.tvBillSubCategory.text = bill.billInfo.minorTagName
+            val sb = StringBuilder()
+            binding.tvProcess.text = bill.status
+            binding.tvTitleBill.text = bill.title
+            binding.tvBillSuggester.text = bill.proposer ?: "위원장"
+            binding.tvBillSuggestDate.text = bill.registerDate
+            binding.tvBillParentCategory.text = bill.majorTagName
+            binding.tvBillSubCategory.text = if (bill.minorTagName?.length!! >= 8) {
+                sb.append(bill.minorTagName.substring(0, 8)).append("...").toString()
+            } else {
+                bill.minorTagName
+            }
         }
     }
 
-    companion object BillEvaluationProcessDiffUtil : DiffUtil.ItemCallback<Bill>() {
-        override fun areItemsTheSame(oldItem: Bill, newItem: Bill): Boolean {
-            return oldItem.billInfo.title == newItem.billInfo.title
+    companion object BillEvaluationProcessDiffUtil : DiffUtil.ItemCallback<BillResponseItem>() {
+        override fun areItemsTheSame(oldItem: BillResponseItem, newItem: BillResponseItem): Boolean {
+            return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Bill, newItem: Bill): Boolean {
+        override fun areContentsTheSame(oldItem: BillResponseItem, newItem: BillResponseItem): Boolean {
             return oldItem == newItem
         }
     }

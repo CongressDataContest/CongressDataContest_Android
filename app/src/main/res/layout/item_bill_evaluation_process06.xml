@@ -25,6 +25,19 @@
             app:strokeColor="#03588C"
             app:strokeWidth="3dp" />
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_inner_process"
+            android:layout_width="57dp"
+            android:layout_height="57dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="#03588C"
+            app:strokeWidth="1dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
