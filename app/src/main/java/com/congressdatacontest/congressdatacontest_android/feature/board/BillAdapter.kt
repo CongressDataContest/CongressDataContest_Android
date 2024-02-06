@@ -35,18 +35,23 @@ class BillAdapter(
                 onClick(bill)
             }
 
+            val sb = StringBuilder()
             binding.tvProcess.text = bill.status
             binding.tvTitleBill.text = bill.title
-            binding.tvBillSuggester.text = bill.proposer
+            binding.tvBillSuggester.text = bill.proposer ?: "위원장"
             binding.tvBillSuggestDate.text = bill.registerDate
             binding.tvBillParentCategory.text = bill.majorTagName
-            binding.tvBillSubCategory.text = bill.minorTagName
+            binding.tvBillSubCategory.text = if (bill.minorTagName?.length!! >= 8) {
+                sb.append(bill.minorTagName.substring(0, 8)).append("...").toString()
+            } else {
+                bill.minorTagName
+            }
         }
     }
 
     companion object BillEvaluationProcessDiffUtil : DiffUtil.ItemCallback<BillResponseItem>() {
         override fun areItemsTheSame(oldItem: BillResponseItem, newItem: BillResponseItem): Boolean {
-            return oldItem.title == newItem.title
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: BillResponseItem, newItem: BillResponseItem): Boolean {
