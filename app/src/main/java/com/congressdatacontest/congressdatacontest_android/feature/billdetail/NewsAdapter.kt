@@ -1,5 +1,6 @@
 package com.congressdatacontest.congressdatacontest_android.feature.billdetail
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.congressdatacontest.congressdatacontest_android.databinding.ItemNewsBinding
+import kotlin.math.roundToInt
 
 class NewsAdapter(
     private val onClick: (NewsData) -> Unit
@@ -37,9 +39,17 @@ class NewsAdapter(
             }
 
             binding.tvTitleNews.text = newsData.title
-            binding.tvPositiveCount.text = newsData.positive.toString()
-            binding.tvNeutralCount.text = newsData.neutral.toString()
-            binding.tvNegativeCount.text = newsData.negative.toString()
+            binding.tvPositiveCount.text = newsData.positive.roundToInt().toString()
+            binding.tvNeutralCount.text = newsData.neutral.roundToInt().toString()
+            binding.tvNegativeCount.text = newsData.negative.roundToInt().toString()
+
+            Log.i("bind", "newsData.positive: ${newsData.positive}")
+            Log.i("bind", "newsData.neutral: ${newsData.neutral}")
+            Log.i("bind", "newsData.negative: ${newsData.negative}")
+
+            Log.i("bind", "newsData.positive: ${"%.6f".format(newsData.positive)}")
+            Log.i("bind", "newsData.neutral: ${"%.6f".format(newsData.neutral)}")
+            Log.i("bind", "newsData.negative: ${"%.6f".format(newsData.negative)}")
 
             Glide.with(itemView).load(newsData.image).into(binding.ivNews)
         }
@@ -47,7 +57,7 @@ class NewsAdapter(
 
     companion object NewsDiffUtil : DiffUtil.ItemCallback<NewsData>() {
         override fun areItemsTheSame(oldItem: NewsData, newItem: NewsData): Boolean {
-            return oldItem.title == newItem.title
+            return oldItem.link == newItem.link
         }
 
         override fun areContentsTheSame(oldItem: NewsData, newItem: NewsData): Boolean {
